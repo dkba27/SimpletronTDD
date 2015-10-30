@@ -98,6 +98,7 @@ int simpletron::getOpCode(string userInput)
 string simpletron::read(int operand)
 {
 	string input;
+	cout << "Input -> ";
 	cin >> input;
 	memory[operand] = input;
 	return input;
@@ -105,14 +106,15 @@ string simpletron::read(int operand)
 
 void simpletron::write(int operand)
 {
-	cout << memory[operand];
+	cout << memory[operand] << endl;
 }
 //20      00
 int simpletron::load(int operand)  // return what is being loaded
 {
+	string strTemp = memory[operand];
+	int intTemp = atoi(strTemp.c_str());
 
-	//accumulator = atoi(memory[operand].c_str());
-	return atoi(memory[operand].c_str());;
+	return intTemp;
 }
 string simpletron::store(int operand) // 20, 21 load/store accum
 {
@@ -121,19 +123,23 @@ string simpletron::store(int operand) // 20, 21 load/store accum
 }
 int simpletron::add(int operand)
 {
-	return accumulator + atoi(memory[operand].c_str());
+	 accumulator += atoi(memory[operand].c_str());
+	return accumulator;
 }
 int simpletron::subtract(int operand)
 {
-	return accumulator - atoi(memory[operand].c_str());
+	accumulator -= atoi(memory[operand].c_str());
+	return accumulator;
 }
 int simpletron::multiply(int operand)
 {
-	return accumulator * atoi(memory[operand].c_str());
+	accumulator *= atoi(memory[operand].c_str());
+	return accumulator;
 }
 float simpletron::divide(int operand)
 {
-	return accumulator / atoi(memory[operand].c_str());
+	 accumulator /= atoi(memory[operand].c_str());
+	return accumulator;
 }
 string simpletron::branch(int operand) // 40 -- return value at memory[opcode] location
 {
@@ -195,6 +201,7 @@ int simpletron::evalInstruction(int opcode, int operand)
 
 	case LOAD:
 		retCode = load(operand);
+		accumulator = retCode;
 		break;
 
 
